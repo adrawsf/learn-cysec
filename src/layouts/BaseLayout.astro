@@ -13,6 +13,7 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 ---
 
 <!DOCTYPE html>
@@ -21,24 +22,24 @@ const currentPath = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
     <title>{title === SITE.title ? title : `${title} | ${SITE.title}`}</title>
   </head>
   <body class="min-h-screen flex flex-col font-sans antialiased text-gray-200 selection:bg-brand/30 selection:text-white">
     <header class="border-b border-border sticky top-0 bg-bg/90 backdrop-blur-sm z-50">
       <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="/" class="font-mono font-bold text-lg tracking-tight hover:text-brand transition-colors">
+        <a href={base} class="font-mono font-bold text-lg tracking-tight hover:text-brand transition-colors">
           <span class="text-brand">&gt;</span> cyber-learning
         </a>
         
         <!-- Desktop Nav -->
         <nav class="hidden md:flex gap-6 text-sm font-medium">
-          <a href="/" class={`hover:text-brand transition-colors ${currentPath === '/' ? 'text-brand' : 'text-text-muted'}`}>Home</a>
-          <a href="/notes" class={`hover:text-brand transition-colors ${currentPath.startsWith('/notes') ? 'text-brand' : 'text-text-muted'}`}>Notes</a>
-          <a href="/topics" class={`hover:text-brand transition-colors ${currentPath.startsWith('/topics') ? 'text-brand' : 'text-text-muted'}`}>Topics</a>
-          <a href="/roadmap" class={`hover:text-brand transition-colors ${currentPath === '/roadmap' ? 'text-brand' : 'text-text-muted'}`}>Roadmap</a>
-          <a href="/about" class={`hover:text-brand transition-colors ${currentPath === '/about' ? 'text-brand' : 'text-text-muted'}`}>About</a>
+          <a href={base} class={`hover:text-brand transition-colors ${currentPath === base ? 'text-brand' : 'text-text-muted'}`}>Home</a>
+          <a href={`${base}notes`} class={`hover:text-brand transition-colors ${currentPath.startsWith(`${base}notes`) ? 'text-brand' : 'text-text-muted'}`}>Notes</a>
+          <a href={`${base}topics`} class={`hover:text-brand transition-colors ${currentPath.startsWith(`${base}topics`) ? 'text-brand' : 'text-text-muted'}`}>Topics</a>
+          <a href={`${base}roadmap`} class={`hover:text-brand transition-colors ${currentPath === `${base}roadmap` ? 'text-brand' : 'text-text-muted'}`}>Roadmap</a>
+          <a href={`${base}about`} class={`hover:text-brand transition-colors ${currentPath === `${base}about` ? 'text-brand' : 'text-text-muted'}`}>About</a>
           <a href={SITE.githubUrl} target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-white transition-colors">GitHub</a>
         </nav>
 
@@ -51,11 +52,11 @@ const currentPath = Astro.url.pathname;
       <!-- Mobile Nav -->
       <nav id="mobile-menu" class="hidden border-t border-border bg-bg/95 backdrop-blur-sm md:hidden pb-4 pt-2">
         <div class="flex flex-col gap-4 px-4 text-sm font-medium">
-          <a href="/" class="block py-2">Home</a>
-          <a href="/notes" class="block py-2">Notes</a>
-          <a href="/topics" class="block py-2">Topics</a>
-          <a href="/roadmap" class="block py-2">Roadmap</a>
-          <a href="/about" class="block py-2">About</a>
+          <a href={base} class="block py-2">Home</a>
+          <a href={`${base}notes`} class="block py-2">Notes</a>
+          <a href={`${base}topics`} class="block py-2">Topics</a>
+          <a href={`${base}roadmap`} class="block py-2">Roadmap</a>
+          <a href={`${base}about`} class="block py-2">About</a>
         </div>
       </nav>
     </header>

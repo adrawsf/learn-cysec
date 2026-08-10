@@ -4,6 +4,7 @@ import { TOPICS } from '../../config/topics';
 import { getTopicsStats } from '../../utils/progress';
 
 const topicStats = await getTopicsStats(TOPICS);
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 ---
 
 <BaseLayout title="Topics">
@@ -18,7 +19,7 @@ const topicStats = await getTopicsStats(TOPICS);
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {topicStats.map(topic => (
-      <a href={`/topics/${topic.slug}`} class="block group">
+      <a href={`${base}topics/${topic.slug}`} class="block group">
         <div class="bg-surface border border-border hover:border-brand/50 rounded-xl p-6 transition-all h-full flex flex-col">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-bold text-white group-hover:text-brand transition-colors">{topic.name}</h2>

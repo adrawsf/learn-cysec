@@ -7,8 +7,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://cyberlearning.local', // Replace with your GitHub Pages URL
-  // base: '/your-repo-name', // Uncomment and replace if deploying to a subpath
+  site: 'https://adrawsf.github.io',
+  base: '/learn-cysec',
   vite: {
     plugins: [tailwindcss()]
   },
