@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About">
+  <article class="max-w-3xl mx-auto">
+    <header class="mb-12">
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
+        About This Journey
+      </h1>
+      <p class="text-text-muted text-lg">
+        Documenting the process, not just the result.
+      </p>
+    </header>
+
+    <div class="prose prose-invert prose-brand max-w-none">
+      <h2>Goal</h2>
+      <p>
+        The purpose of this website is to serve as a personal knowledge base and public ledger of my cybersecurity studies. Learning complex technical subjects is an iterative process, and writing about them helps solidify understanding.
+      </p>
+
+      <h2>Current Focus</h2>
+      <p>
+        I am currently focusing on understanding the fundamentals of systems and networking, before diving deeper into web application security and penetration testing methodologies.
+      </p>
+      
+      <ul>
+        <li>Web Security Fundamentals (OWASP Top 10)</li>
+        <li>Network Protocols & Architecture</li>
+        <li>Linux Administration & Privilege Escalation</li>
+      </ul>
+
+      <h2>Philosophy</h2>
+      <blockquote>
+        "The only true wisdom is in knowing you know nothing." - Socrates
+      </blockquote>
+      <p>
+        Security is a massive domain. This site isn't meant to be a definitive guide for others, but rather a reflection of my current understanding, which will inevitably evolve, be corrected, and expand over time.
+      </p>
+
+      <h2>Tools</h2>
+      <p>
+        This site is statically generated using <strong>Astro</strong>, styled with <strong>Tailwind CSS</strong>, and deployed via <strong>GitHub Pages</strong>. The content is written entirely in Markdown, ensuring a frictionless authoring experience.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

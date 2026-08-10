@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import Search from '../../components/Search.astro';
+import { getCollection } from 'astro:content';
+
+const allNotes = await getCollection('notes');
+const sortedNotes = allNotes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Notes">
+  <header class="mb-12">
+    <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
+      Knowledge Base
+    </h1>
+    <p class="text-text-muted max-w-2xl">
+      A searchable archive of all my cybersecurity learning notes.
+    </p>
+  </header>
+
+  <Search />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {sortedNotes.map(note => (
+      <div 
+        class="note-card-wrapper" 
+        data-category={note.data.category}
+        data-status={note.data.status}
+        data-difficulty={note.data.difficulty}
+        data-search={`${note.data.title} ${note.data.description} ${note.data.tags.join(' ')}`.toLowerCase()}
+      >
+        <NoteCard note={note} />
+      </div>
+    ))}
+  </div>
+  
+  {sortedNotes.length === 0 && (
+    <div class="text-center py-20 bg-surface border border-border rounded-xl">
+      <p class="text-text-muted">No notes found.</p>
+    </div>
+  )}
+</BaseLayout>

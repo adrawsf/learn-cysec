@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ROADMAP } from '../config/roadmap';
+
+const statusColors = {
+  planned: 'bg-gray-800 text-gray-400 border-gray-700',
+  learning: 'bg-yellow-900/30 text-yellow-500 border-yellow-900/50',
+  completed: 'bg-brand/10 text-brand border-brand/20',
+};
+
+const statusIcons = {
+  planned: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="4 4" />',
+  learning: '<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  completed: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>',
+};
+---
+
+<BaseLayout title="Roadmap">
+  <header class="mb-12">
+    <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
+      Learning Roadmap
+    </h1>
+    <p class="text-text-muted max-w-2xl">
+      The planned trajectory for my cybersecurity studies. This is a living document that evolves as I learn.
+    </p>
+  </header>
+
+  <div class="space-y-12 max-w-4xl">
+    {ROADMAP.map((section, index) => (
+      <div class="relative">
+        {/* Connecting line for timeline effect */}
+        {index !== ROADMAP.length - 1 && (
+          <div class="absolute left-4 top-14 bottom-[-3rem] w-px bg-border hidden md:block"></div>
+        )}
+        
+        <div class="md:flex gap-8 items-start">
+          <div class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-surface border border-border text-brand font-mono font-bold z-10 mt-1 flex-shrink-0">
+            {index + 1}
+          </div>
+          
+          <div class="flex-grow">
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-6 uppercase tracking-wider font-mono">
+              {section.title}
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {section.items.map(item => (
+                <div class="bg-surface border border-border rounded-lg p-4 flex items-center justify-between">
+                  <span class={`font-medium ${item.status === 'completed' ? 'text-white' : 'text-text-body'}`}>
+                    {item.title}
+                  </span>
+                  <div 
+                    class={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${statusColors[item.status]}`}
+                    title={`Status: ${item.status}`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" set:html={statusIcons[item.status]}></svg>
+                    {item.status}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

@@ -1,0 +1,92 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = SITE.title, 
+  description = SITE.description 
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title === SITE.title ? title : `${title} | ${SITE.title}`}</title>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans antialiased text-gray-200 selection:bg-brand/30 selection:text-white">
+    <header class="border-b border-border sticky top-0 bg-bg/90 backdrop-blur-sm z-50">
+      <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight hover:text-brand transition-colors">
+          <span class="text-brand">&gt;</span> cyber-learning
+        </a>
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-6 text-sm font-medium">
+          <a href="/" class={`hover:text-brand transition-colors ${currentPath === '/' ? 'text-brand' : 'text-text-muted'}`}>Home</a>
+          <a href="/notes" class={`hover:text-brand transition-colors ${currentPath.startsWith('/notes') ? 'text-brand' : 'text-text-muted'}`}>Notes</a>
+          <a href="/topics" class={`hover:text-brand transition-colors ${currentPath.startsWith('/topics') ? 'text-brand' : 'text-text-muted'}`}>Topics</a>
+          <a href="/roadmap" class={`hover:text-brand transition-colors ${currentPath === '/roadmap' ? 'text-brand' : 'text-text-muted'}`}>Roadmap</a>
+          <a href="/about" class={`hover:text-brand transition-colors ${currentPath === '/about' ? 'text-brand' : 'text-text-muted'}`}>About</a>
+          <a href={SITE.githubUrl} target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-white transition-colors">GitHub</a>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-text-muted hover:text-white" aria-label="Toggle Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+      </div>
+      
+      <!-- Mobile Nav -->
+      <nav id="mobile-menu" class="hidden border-t border-border bg-bg/95 backdrop-blur-sm md:hidden pb-4 pt-2">
+        <div class="flex flex-col gap-4 px-4 text-sm font-medium">
+          <a href="/" class="block py-2">Home</a>
+          <a href="/notes" class="block py-2">Notes</a>
+          <a href="/topics" class="block py-2">Topics</a>
+          <a href="/roadmap" class="block py-2">Roadmap</a>
+          <a href="/about" class="block py-2">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-grow w-full max-w-5xl mx-auto px-4 py-8 md:py-12">
+      <slot />
+    </main>
+
+    <footer class="border-t border-border mt-auto">
+      <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
+        <div>
+          <p class="font-medium text-white">{SITE.title}</p>
+          <p class="mt-1 text-xs">"Built to document the process, not just the result."</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <span>&copy; {new Date().getFullYear()}</span>
+          <a href={SITE.githubUrl} class="hover:text-white transition-colors">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle logic
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      
+      if (btn && menu) {
+        btn.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+        });
+      }
+    </script>
+  </body>
+</html>

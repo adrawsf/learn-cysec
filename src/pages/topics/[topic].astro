@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import { getCollection } from 'astro:content';
+import { TOPICS } from '../../config/topics';
+
+export async function getStaticPaths() {
+  const allNotes = await getCollection('notes');
+  
+  return TOPICS.map(topic => {
+    const topicNotes = allNotes
+      .filter(note => note.data.category === topic.slug)
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+      
+    return {
+      params: { topic: topic.slug },
+      props: { topic, notes: topicNotes },
+    };
+  });
+}
+
+const { topic, notes } = Astro.props;
+---
+
+<BaseLayout title={`${topic.name} Notes`}>
+  <header class="mb-12 border-b border-border pb-8">
+    <div class="mb-4">
+      <a href="/topics" class="text-brand text-sm hover:underline font-mono">&lt;-- Back to all topics</a>
+    </div>
+    <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
+      {topic.name}
+    </h1>
+    <p class="text-text-muted max-w-2xl text-lg">
+      {topic.description}
+    </p>
+    <div class="mt-6 inline-flex bg-surface px-3 py-1.5 rounded text-sm font-medium border border-border">
+      <span class="text-brand mr-2">{notes.length}</span> {notes.length === 1 ? 'entry' : 'entries'} in this domain
+    </div>
+  </header>
+
+  {notes.length > 0 ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {notes.map(note => (
+        <NoteCard note={note} />
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-20 bg-surface border border-border rounded-xl">
+      <p class="text-text-muted">No notes published in this domain yet.</p>
+    </div>
+  )}
+</BaseLayout>

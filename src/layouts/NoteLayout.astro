@@ -1,0 +1,83 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const { title, description, date, category, tags, difficulty, status } = note.data;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// Map status to color
+const statusColors = {
+  planned: 'bg-gray-800 text-gray-300 border-gray-700',
+  learning: 'bg-yellow-900/30 text-yellow-500 border-yellow-900/50',
+  completed: 'bg-brand/10 text-brand border-brand/20',
+};
+
+const diffColors = {
+  beginner: 'text-green-400',
+  intermediate: 'text-yellow-400',
+  advanced: 'text-red-400',
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <header class="mb-10 pb-10 border-b border-border">
+      <div class="flex items-center gap-3 mb-4 text-xs font-mono">
+        <a href={`/topics/${category}`} class="text-brand hover:underline uppercase tracking-wider">{category}</a>
+        <span class="text-border">•</span>
+        <time class="text-text-muted">{formattedDate}</time>
+      </div>
+      
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-white">
+        {title}
+      </h1>
+      
+      <p class="text-lg text-text-muted mb-6">
+        {description}
+      </p>
+      
+      <div class="flex flex-wrap items-center gap-4 text-sm">
+        <span class={`px-2.5 py-0.5 rounded-full border ${statusColors[status]} font-medium capitalize`}>
+          {status}
+        </span>
+        <span class="text-text-muted">
+          Difficulty: <span class={`font-medium ${diffColors[difficulty]}`}>{difficulty}</span>
+        </span>
+      </div>
+      
+      {tags && tags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+          {tags.map(tag => (
+            <span class="px-2 py-1 bg-surface border border-border rounded text-xs text-text-muted">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-invert prose-brand max-w-none">
+      <slot />
+    </div>
+    
+    <!-- Footer Navigation -->
+    <footer class="mt-16 pt-8 border-t border-border flex justify-between items-center">
+      <a href="/notes" class="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back to Notes
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

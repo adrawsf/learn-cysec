@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const { title, description, category, date, difficulty, status } = note.data;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const statusColors = {
+  planned: 'bg-gray-800 text-gray-300 border-gray-700',
+  learning: 'bg-yellow-900/30 text-yellow-500 border-yellow-900/50',
+  completed: 'bg-brand/10 text-brand border-brand/20',
+};
+
+const diffColors = {
+  beginner: 'text-green-400',
+  intermediate: 'text-yellow-400',
+  advanced: 'text-red-400',
+};
+---
+
+<a href={`/notes/${note.id}`} class="block group">
+  <article class="h-full bg-surface hover:bg-surface-hover border border-border hover:border-border-hover rounded-xl p-5 transition-all duration-200 flex flex-col">
+    <div class="flex justify-between items-start mb-3">
+      <span class="text-xs font-mono tracking-wider text-brand uppercase">{category}</span>
+      <time class="text-xs text-text-muted font-mono">{formattedDate}</time>
+    </div>
+    
+    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-brand-light transition-colors line-clamp-2">
+      {title}
+    </h3>
+    
+    <p class="text-sm text-text-muted mb-6 flex-grow line-clamp-3">
+      {description}
+    </p>
+    
+    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+      <div class="flex items-center gap-2">
+        <span class={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${statusColors[status]}`}>
+          {status}
+        </span>
+      </div>
+      <span class={`text-xs font-medium ${diffColors[difficulty]}`}>
+        {difficulty}
+      </span>
+    </div>
+  </article>
+</a>
