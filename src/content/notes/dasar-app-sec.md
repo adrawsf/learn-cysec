@@ -36,26 +36,6 @@ Konsep di mana keamanan **tidak boleh dipikirkan di akhir**, melainkan harus dib
 - **CISO / AppSec Manager:** Membuat kebijakan keamanan, memastikan kepatuhan terhadap regulasi, dan memimpin strategi perlindungan.
 - **Penetration Tester:** Menguji dan meretas aplikasi secara legal menggunakan berbagai alat dan teknik (analisis statis dan dinamis) untuk menemukan celah keamanan sebelum diretas oleh pihak tidak bertanggung jawab.
 
-## Commands / Examples
-
-- _Static Analysis / Dynamic Analysis_ (Teknik yang biasa digunakan _Penetration Tester_ untuk mencari celah pada aplikasi).
-
-## What confused me
-
-- _(Isi dengan bagian yang masih kurang dipahami, misalnya: Bedanya analisis statis dan dinamis pada pentest, atau detail dari Threat Modeling)_
-
-## What I need to revisit
-
-- _(Isi dengan materi yang butuh diulang, misalnya: Cara melakukan Secure Code Review atau membedakan Authentication vs Authorization lebih detail)_
-
-## Practical Exercise
-
-- _(Isi dengan latihan praktik, misalnya: Mencoba mencari bug XSS atau SQL Injection sederhana di aplikasi lab seperti DVWA)_
-
-## Resources
-
-- _(Isi dengan link course, buku, atau video referensi)_
-
 ## Personal Notes
 
 **Tantangan Terbesar di AppSec:**
